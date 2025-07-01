@@ -1,5 +1,7 @@
 <script setup>
 import PetCard from './PetCard.vue';
+import SideBar from './SideBar.vue';
+
 
 const pets = [
   {
@@ -51,7 +53,9 @@ const pets = [
 
 <template>
   <div >
-    
+    <div>
+      <SideBar/>
+    </div>
     <h1>🐶 Mascotas en Adopción</h1>
     <div class="pet-container">
       <PetCard
