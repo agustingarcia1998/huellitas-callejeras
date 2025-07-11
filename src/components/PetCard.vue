@@ -1,53 +1,63 @@
 <script setup>
-import imagen from "../assets/animal.png"
+import { computed } from "vue";
 
-defineProps(["nombre", "edad", "raza", "imagen"]);
+const props = defineProps(["nombre", "edad", "tamaño", "imagen"]);
+
+const imageUrl = computed(() => {
+  try {
+    return new URL(`../assets/${props.imagen}`, import.meta.url).href;
+  } catch (error) {
+    return new URL(`../assets/default.png`, import.meta.url).href;
+  }
+});
 </script>
 
 <template>
   <div class="card-container">
     <div class="card-img">
-      <img :src="imagen" alt="Foto de mascota" />
+      <img :src="imageUrl" alt="Foto de mascota" />
     </div>
     <div class="card-info">
-      <h2>{{ nombre }}</h2>
-      <p>{{ raza }}</p>
+      <div class="title">
+        <h2>{{ nombre }}</h2>
+      </div>
       <p>{{ edad }}</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-
-.card-container{
+.card-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   gap: 5px;
-
 }
 
 .card-info {
-  height: 200px;
-  width: 500px;
   padding: 1rem;
   color: black;
-  border: 1px solid #ccc;
-  text-align: center;
   background: #fff;
   border-radius: 6px;
-
+  border: 1px solid #ccc;
+  text-align: center;
+  flex: 1;
 }
 
-img{
-  width: 350px;
-  height: 200px;
+.card-img {
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
   border-radius: 6px;
-
 }
 
-
-/* .card img {
-  
-} */
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 6px;
+}
 </style>
