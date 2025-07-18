@@ -1,12 +1,16 @@
 <script setup>
-import Dashboard from "./components/Dashboard.vue"
+import SideBar from './components/SideBar.vue';
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <v-app>
-    <v-main>
-      <Dashboard />
-    </v-main>
+    <v-layout>
+      <Sidebar />
+      <v-main>
+        <RouterView />
+      </v-main>
+    </v-layout>
   </v-app>
 </template>
 

@@ -1,9 +1,7 @@
 <script setup>
-import PetCard from './PetCard.vue';
-import SideBar from './SideBar.vue';
+import PetCard from '@/components/PetCard.vue';
+import SideBar from '@/components/SideBar.vue';
 import { pets } from '../../utils/pets';
-
-
 </script>
 
 <template>
@@ -26,7 +24,7 @@ import { pets } from '../../utils/pets';
 </template>
 
 <style scoped>
-.hola{
+.hola {
   background-color: rgba(0, 0, 0, 0.822);
 }
 .pet-container {
@@ -35,11 +33,8 @@ import { pets } from '../../utils/pets';
   gap: 1rem;
   padding: 1rem;
 }
-
-h1{
+h1 {
   display: flex;
   justify-content: center;
-} 
-
-
+}
 </style>
