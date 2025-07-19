@@ -3,7 +3,7 @@ import { menuItems } from "../../utils/sideBarItems";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
-const route = useRoute(); 
+const route = useRoute();
 
 // Función para navegar al hacer click en item
 function navigateTo(link) {
@@ -14,10 +14,10 @@ function navigateTo(link) {
 </script>
 
 <template>
-  <v-navigation-drawer :width="200" permanent app>
-    <v-list dense nav>
+  <v-navigation-drawer class="sidebar" :width="200" permanent app>
+    <v-list nav>
       <div
-        class="logo-app"
+        class="title-sideBar"
         style="padding: 1rem; font-weight: bold; font-size: 1.2rem"
       >
         Huellitas Callejeras
@@ -35,13 +35,13 @@ function navigateTo(link) {
           rounded
           style="cursor: pointer"
         >
-          <v-list-item-icon>
+          <template #prepend>
             <v-icon>{{ item.icon || "mdi-paw" }}</v-icon>
-          </v-list-item-icon>
+          </template>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
+          <template #title>
+            {{ item.text }}
+          </template>
         </v-list-item>
       </div>
     </v-list>
@@ -49,20 +49,24 @@ function navigateTo(link) {
 </template>
 
 <style scoped>
-.logo-app {
+.sidebar {
+  max-width: 288px;
+  height: 100%;
+  background-color: #f5b074;
+}
+
+.title-sideBar {
   text-align: center;
   font-weight: 700;
   font-size: 1.4rem;
   padding: 1.5rem 1rem;
-  color: #1976d2; 
+  color: #000000;
   border-bottom: 1px solid #e0e0e0;
   user-select: none;
 }
 
 .v-list-subheader {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #555;
+  color: #000000;
   padding-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
@@ -71,23 +75,12 @@ function navigateTo(link) {
 }
 
 .v-list-item {
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 
 .v-list-item:hover {
-  background-color: #e3f2fd; 
+  background-color: #00000056;
+  color: white;
   cursor: pointer;
-}
-
-.active-item {
-  background-color: #bbdefb !important; 
-  font-weight: 700;
-  color: #0d47a1 !important; 
-}
-
-.v-list-item-title {
-  user-select: none;
-  font-size: 1rem;
-  color: inherit;
 }
 </style>
