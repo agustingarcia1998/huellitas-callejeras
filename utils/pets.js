@@ -53,6 +53,15 @@ export const pets = [
     sexo: "macho",
     peso: 3,
     tamaño: "Grande"
+  },
+  {
+    id: 7,
+    nombre: 'Emmita',
+    edad: '33 años',
+    imagen: "perrito.jpeg",
+    sexo: "no binarie",
+    peso: 3,
+    tamaño: "Grande"
   }
 
 

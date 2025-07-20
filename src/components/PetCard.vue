@@ -1,17 +1,25 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   pet: Object,
 });
 
 const flipped = ref(false);
+const router = useRouter();
 
 const imageUrl = new URL(`../assets/${props.pet.imagen}`, import.meta.url).href;
 
-// Función para manejar la acción del botón
+// Navegar al formulario de adopción
 const adoptPet = () => {
-  console.log(`¡Adoptar a ${props.pet.nombre}!`);
+  router.push({
+    path: "/requisitos",
+    query: {
+      nombre: props.pet.nombre,
+      imagen: props.pet.imagen
+    }
+  });
 };
 </script>
 

@@ -1,15 +1,24 @@
 <script setup>
-import { menuItems } from "../../utils/sideBarItems";
+import { getMenuItems } from "../../utils/sideBarItems";
+import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth"; 
 
 const router = useRouter();
 const route = useRoute();
+const auth = useAuthStore();
 
-// Función para navegar al hacer click en item
+const menuItems = computed(() => getMenuItems(auth.usuarioActual));
+
 function navigateTo(link) {
   if (link && link !== "#") {
     router.push(link);
   }
+}
+
+function logout() {
+  auth.logout();
+  router.push("/");
 }
 </script>
 
@@ -21,6 +30,16 @@ function navigateTo(link) {
         style="padding: 1rem; font-weight: bold; font-size: 1.2rem"
       >
         Huellitas Callejeras
+      </div>
+
+      <div v-if="auth.usuarioActual" class="user-info" style="padding: 1rem;">
+        <div><strong>Hola, {{ auth.usuarioActual.nombre }}</strong></div>
+        <v-btn small text color="red" @click="logout">Cerrar sesión</v-btn>
+      </div>
+
+      <div v-else class="login-register" style="padding: 1rem;">
+        <v-btn small text @click="navigateTo('/login')">Iniciar sesión</v-btn>
+        <v-btn small text @click="navigateTo('/register')">Registrarse</v-btn>
       </div>
 
       <div v-for="(menu, index) in menuItems" :key="index" class="mb-4">
