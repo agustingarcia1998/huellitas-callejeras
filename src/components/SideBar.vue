@@ -2,16 +2,18 @@
 import { getMenuItems } from "../../utils/sideBarItems";
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { useAuthStore } from "@/stores/auth"; 
+import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
 const route = useRoute();
 const auth = useAuthStore();
 
-const menuItems = computed(() => getMenuItems(auth.usuarioActual));
+const menuItems = computed(() => getMenuItems(auth.currentUser));
 
 function navigateTo(link) {
-  if (link && link !== "#") {
+  if (link === "/logout") {
+    logout();
+  } else if (link && link !== "#") {
     router.push(link);
   }
 }
@@ -25,23 +27,20 @@ function logout() {
 <template>
   <v-navigation-drawer class="sidebar" :width="200" permanent app>
     <v-list nav>
-      <div
-        class="title-sideBar"
-        style="padding: 1rem; font-weight: bold; font-size: 1.2rem"
-      >
-        Huellitas Callejeras
+      <!-- Título -->
+      <div class="title-sideBar">Huellitas Callejeras</div>
+
+      <!-- Saludo si hay usuario -->
+      <div v-if="auth.currentUser" class="user-info" style="padding: 1rem">
+        <div>
+          <strong>Hola, {{ auth.currentUser.name }}</strong>
+        </div>
+        <div v-if="auth.currentUser.role === 'admin'" class="admin-label">
+          (admin)
+        </div>
       </div>
 
-      <div v-if="auth.usuarioActual" class="user-info" style="padding: 1rem;">
-        <div><strong>Hola, {{ auth.usuarioActual.nombre }}</strong></div>
-        <v-btn small text color="red" @click="logout">Cerrar sesión</v-btn>
-      </div>
-
-      <div v-else class="login-register" style="padding: 1rem;">
-        <v-btn small text @click="navigateTo('/login')">Iniciar sesión</v-btn>
-        <v-btn small text @click="navigateTo('/register')">Registrarse</v-btn>
-      </div>
-
+      <!-- Menú dinámico -->
       <div v-for="(menu, index) in menuItems" :key="index" class="mb-4">
         <v-list-subheader>{{ menu.section }}</v-list-subheader>
 
@@ -101,5 +100,13 @@ function logout() {
   background-color: #00000056;
   color: white;
   cursor: pointer;
+}
+
+.admin-label {
+  color: blue;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  user-select: none;
 }
 </style>

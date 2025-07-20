@@ -2,44 +2,45 @@ import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    usuarioActual: null,
-    usuarios: JSON.parse(localStorage.getItem("usuariosHuellitas")) || [],
+    currentUser: null,
+    users: JSON.parse(localStorage.getItem("huellitasUsers")) || [],
+    adminEmails: ["garzaniel1@gmail.com", "garzaniel2@gmail.com"], // Lista de admins
   }),
   actions: {
     login(email, password) {
-      const usuario = this.usuarios.find(
+      const user = this.users.find(
         (u) => u.email === email && u.password === password
       );
-      if (usuario) {
-        this.usuarioActual = usuario;
-        localStorage.setItem("usuarioActual", JSON.stringify(usuario));
+      if (user) {
+        this.currentUser = user;
+        localStorage.setItem("currentUser", JSON.stringify(user));
         return true;
       }
       return false;
     },
     logout() {
-      this.usuarioActual = null;
-      localStorage.removeItem("usuarioActual");
+      this.currentUser = null;
+      localStorage.removeItem("currentUser");
     },
-    register(nombre, email, password) {
-      const existe = this.usuarios.find((u) => u.email === email);
-      if (existe) {
+    register(name, email, password) {
+      const exists = this.users.find((u) => u.email === email);
+      if (exists) {
         return false;
       }
-      const nuevoUsuario = {
-        nombre,
+      const newUser = {
+        name,
         email,
         password,
-        rol: email === "admin@huellitas.com" ? "admin" : "usuario",
+        role: this.adminEmails.includes(email) ? "admin" : "user", // asigna rol admin si está en la lista
       };
-      this.usuarios.push(nuevoUsuario);
-      localStorage.setItem("usuariosHuellitas", JSON.stringify(this.usuarios));
+      this.users.push(newUser);
+      localStorage.setItem("huellitasUsers", JSON.stringify(this.users));
       return this.login(email, password);
     },
-    cargarUsuarioActual() {
-      const data = localStorage.getItem("usuarioActual");
+    loadCurrentUser() {
+      const data = localStorage.getItem("currentUser");
       if (data) {
-        this.usuarioActual = JSON.parse(data);
+        this.currentUser = JSON.parse(data);
       }
     },
   },

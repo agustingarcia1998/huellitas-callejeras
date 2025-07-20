@@ -1,43 +1,27 @@
 <script setup>
-import { useAdopcionesStore } from "@/stores/adopciones";
-
-const store = useAdopcionesStore();
-store.cargarDesdeLocalStorage();
+import SideBar from '@/components/SideBar.vue'
 </script>
 
+
 <template>
-  <div class="admin-container">
-    <h1>Solicitudes de adopción</h1>
+  <v-container fluid class="d-flex pa-0 fill-height">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <SideBar />
+    </div>
 
-    <v-table v-if="store.solicitudes.length">
-      <thead>
-        <tr>
-          <th>Mascota</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Motivo</th>
-          <th>Fecha</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(sol, i) in store.solicitudes" :key="i">
-          <td>{{ sol.mascota }}</td>
-          <td>{{ sol.nombreUsuario }}</td>
-          <td>{{ sol.email }}</td>
-          <td>{{ sol.motivo }}</td>
-          <td>{{ sol.fecha }}</td>
-        </tr>
-      </tbody>
-    </v-table>
-
-    <p v-else>No hay solicitudes todavía.</p>
-  </div>
+    <!-- Contenido dinámico de las rutas hijas -->
+    <v-container fluid class="pa-6">
+      <router-view />
+    </v-container>
+  </v-container>
 </template>
 
 <style scoped>
-.admin-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 2rem;
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 </style>

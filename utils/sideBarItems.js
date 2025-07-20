@@ -1,38 +1,33 @@
-export function getMenuItems(usuarioActual) {
-  const isAdmin = usuarioActual?.rol === "admin";
-  const estaLogueado = !!usuarioActual;
+export function getMenuItems(currentUser) {
+  const isAdmin = currentUser?.role === "admin";
+  const isLoggedIn = !!currentUser;
 
   const menu = [
     {
       section: "MENU",
       listItems: [
         { icon: "mdi-view-dashboard", text: "Dashboard", link: "/dashboard" },
-        { icon: "mdi-dog", text: "Puppies", link: "/puppies" },
+        { icon: "mdi-dog", text: "Mascotas", link: "/" },
       ],
     },
     {
       section: "NOSOTROS",
       listItems: [
-        { icon: "mdi-account-group", text: "Quienes somos", link: "/about" },
-        {
-          icon: "mdi-file-document",
-          text: "Requisitos de Adopción",
-          link: "/requirements",
-        },
+        { icon: "mdi-account-group", text: "Sobre Nosotros", link: "/about" },
       ],
     },
     {
-      section: "ADOPCIÓN",
+      section: "ADOPCIONES",
       listItems: [
         {
           icon: "mdi-clipboard-check",
-          text: "Adopción",
-          link: "/requisitos",
+          text: "Requisitos de Adopción",
+          link: "/require",
         },
       ],
     },
     {
-      section: "PREGUNTAS FRECUENTES",
+      section: "FAQ",
       listItems: [{ icon: "mdi-help-circle", text: "FAQ", link: "/faq" }],
     },
   ];
@@ -41,28 +36,29 @@ export function getMenuItems(usuarioActual) {
     menu.push({
       section: "ADMIN",
       listItems: [
-        { icon: "mdi-plus-box", text: "Agregar Mascota", link: "/admin/agregar" },
-        { icon: "mdi-delete", text: "Mascotas Adoptadas", link: "/admin/adoptadas" },
+        { icon: "mdi-plus-box", text: "Agregar nuevas mascotas", link: "/admin/add" },
+        { icon: "mdi-delete", text: "Remover mascotas adoptadas", link: "/admin/remove" },
       ],
     });
   }
 
-  if (!estaLogueado) {
-    menu.push({
-      section: "CUENTA",
-      listItems: [
-        { icon: "mdi-login", text: "Iniciar sesión", link: "/login" },
-        { icon: "mdi-account-plus", text: "Registrarse", link: "/register" },
-      ],
-    });
-  } else {
-    menu.push({
-      section: "CUENTA",
-      listItems: [
-        { icon: "mdi-logout", text: "Cerrar sesión", link: "/logout" },
-      ],
-    });
-  }
+  // 👉 Insert the "ACCOUNT" section at the beginning
+  const accountSection = isLoggedIn
+    ? {
+        section: "CUENTA",
+        listItems: [
+          { icon: "mdi-logout", text: "Cerrar Sesión", link: "/logout" },
+        ],
+      }
+    : {
+        section: "CUENTA",
+        listItems: [
+          { icon: "mdi-login", text: "Iniciar Sesión", link: "/login" },
+          { icon: "mdi-account-plus", text: "Registrarse", link: "/register" },
+        ],
+      };
+
+  menu.unshift(accountSection);
 
   return menu;
 }

@@ -1,7 +1,14 @@
 <script setup>
 import PetCard from '@/components/PetCard.vue'
-import { pets } from '../../utils/pets';
-import SideBar from '@/components/SideBar.vue';
+import SideBar from '@/components/SideBar.vue'
+import { onMounted } from 'vue'
+import { usePetsStore } from '@/stores/pets'
+
+const petsStore = usePetsStore()
+
+onMounted(() => {
+  petsStore.loadPets()
+})
 </script>
 
 <template>
@@ -16,7 +23,7 @@ import SideBar from '@/components/SideBar.vue';
       <h1 class="text-center text-h4 mb-6">🐶 Mascotas en Adopción</h1>
       <v-row dense>
         <v-col
-          v-for="pet in pets"
+          v-for="pet in petsStore.pets"
           :key="pet.id"
           cols="12"
           sm="6"

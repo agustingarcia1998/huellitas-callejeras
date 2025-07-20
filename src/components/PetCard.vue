@@ -9,15 +9,15 @@ const props = defineProps({
 const flipped = ref(false);
 const router = useRouter();
 
-const imageUrl = new URL(`../assets/${props.pet.imagen}`, import.meta.url).href;
+const imageUrl = new URL(`../assets/${props.pet.image}`, import.meta.url).href;
 
 // Navegar al formulario de adopción
 const adoptPet = () => {
   router.push({
-    path: "/requisitos",
+    path: "/require",
     query: {
-      nombre: props.pet.nombre,
-      imagen: props.pet.imagen
+      nombre: props.pet.name,
+      imagen: props.pet.image
     }
   });
 };
@@ -29,8 +29,8 @@ const adoptPet = () => {
       <div class="flip-card-front">
         <v-card flat class="text-center pa-4">
           <v-img :src="imageUrl" height="200" cover class="mb-2" />
-          <div class="text-h6">{{ pet.nombre }}</div>
-          <div class="text-body-2">{{ pet.edad }}</div>
+          <div class="text-h6">{{ pet.name }}</div>
+          <div class="text-body-2">{{ pet.age }}</div>
         </v-card>
       </div>
 
@@ -40,11 +40,11 @@ const adoptPet = () => {
           class="text-left pa-4 d-flex flex-column justify-space-between"
         >
           <div>
-            <div class="text-h6 mb-2">{{ pet.nombre }}</div>
-            <p><strong>Edad:</strong> {{ pet.edad }}</p>
-            <p><strong>Peso:</strong> {{ pet.peso }} kg</p>
-            <p><strong>Sexo:</strong> {{ pet.sexo }}</p>
-            <p><strong>Tamaño:</strong> {{ pet.tamaño }}</p>
+            <div class="text-h6 mb-2">{{ pet.name }}</div>
+            <p><strong>Edad:</strong> {{ pet.age }}</p>
+            <p><strong>Peso:</strong> {{ pet.weight }} kg</p>
+            <p><strong>Sexo:</strong> {{ pet.gender }}</p>
+            <p><strong>Tamaño:</strong> {{ pet.size }}</p>
           </div>
 
           <v-btn color="primary" block class="mt-4" @click.stop="adoptPet">
