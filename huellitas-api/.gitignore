@@ -1,0 +1,16 @@
+# node
+node_modules/
+.env
+.DS_Store
+
+# logs
+logs
+*.log
+
+# sistema
+dist/
+build/
+
+middlewares/
+routes/
+uploads/
