@@ -1,7 +1,9 @@
 import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { connectDB } from "./config/mongo.config.js";
+import routerPet from "./routes/pets.js";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -11,23 +13,16 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.use("/uploads", express.static(path.resolve("uploads")));
+
+app.use("/api/pets", routerPet);
+
 app.get("/", (req, res) => {
   res.send("funciona");
 });
 
-// conecto a mongo
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Conectado a base de datos");
-
-    app.listen(PORT, () => {
-      console.log(`Servidor funcionando en http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Error de conexión", err.message);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Servidor funcionando en localhost:${PORT}`);
   });
+});

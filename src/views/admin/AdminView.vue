@@ -1,16 +1,13 @@
 <script setup>
-import SideBar from '@/components/SideBar.vue'
+import SideBar from "@/components/SideBar.vue";
 </script>
-
 
 <template>
   <v-container fluid class="d-flex pa-0 fill-height">
-    <!-- Sidebar -->
     <div class="sidebar">
       <SideBar />
     </div>
 
-    <!-- Contenido dinámico de las rutas hijas -->
     <v-container fluid class="pa-6">
       <router-view />
     </v-container>

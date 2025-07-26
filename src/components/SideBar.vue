@@ -1,5 +1,5 @@
 <script setup>
-import { getMenuItems } from "../../utils/sideBarItems";
+import { getMenuItems } from "../utils/sideBarItems";
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
@@ -27,10 +27,8 @@ function logout() {
 <template>
   <v-navigation-drawer class="sidebar" :width="200" permanent app>
     <v-list nav>
-      <!-- Título -->
       <div class="title-sideBar">Huellitas Callejeras</div>
 
-      <!-- Saludo si hay usuario -->
       <div v-if="auth.currentUser" class="user-info" style="padding: 1rem">
         <div>
           <strong>Hola, {{ auth.currentUser.name }}</strong>
@@ -40,7 +38,6 @@ function logout() {
         </div>
       </div>
 
-      <!-- Menú dinámico -->
       <div v-for="(menu, index) in menuItems" :key="index" class="mb-4">
         <v-list-subheader>{{ menu.section }}</v-list-subheader>
 
@@ -78,7 +75,7 @@ function logout() {
   font-weight: 700;
   font-size: 1.4rem;
   padding: 1.5rem 1rem;
-  color: #000000;
+  color: #000000bd;
   border-bottom: 1px solid #e0e0e0;
   user-select: none;
 }

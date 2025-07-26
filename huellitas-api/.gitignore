@@ -11,6 +11,3 @@ logs
 dist/
 build/
 
-middlewares/
-routes/
-uploads/

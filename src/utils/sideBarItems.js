@@ -36,13 +36,20 @@ export function getMenuItems(currentUser) {
     menu.push({
       section: "ADMIN",
       listItems: [
-        { icon: "mdi-plus-box", text: "Agregar nuevas mascotas", link: "/admin/add" },
-        { icon: "mdi-delete", text: "Remover mascotas adoptadas", link: "/admin/remove" },
+        {
+          icon: "mdi-plus-box",
+          text: "Agregar nuevas mascotas",
+          link: "/admin/add",
+        },
+        {
+          icon: "mdi-delete",
+          text: "Remover mascotas adoptadas",
+          link: "/admin/remove",
+        },
       ],
     });
   }
 
-  // 👉 Insert the "ACCOUNT" section at the beginning
   const accountSection = isLoggedIn
     ? {
         section: "CUENTA",
