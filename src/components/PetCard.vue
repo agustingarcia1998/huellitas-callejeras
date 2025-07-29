@@ -9,7 +9,7 @@ const props = defineProps({
 const flipped = ref(false);
 const router = useRouter();
 
-const imageUrl = new URL(`../assets/${props.pet.image}`, import.meta.url).href;
+const imageUrl = `http://localhost:3030${props.pet.image}`;
 
 // Navegar al formulario de adopción
 const adoptPet = () => {
@@ -17,8 +17,8 @@ const adoptPet = () => {
     path: "/require",
     query: {
       nombre: props.pet.name,
-      imagen: props.pet.image
-    }
+      imagen: props.pet.image,
+    },
   });
 };
 </script>

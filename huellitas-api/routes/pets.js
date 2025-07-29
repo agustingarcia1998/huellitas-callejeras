@@ -13,11 +13,16 @@ routerPet.post("/", upload.single("image"), async (req, res) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   }
 
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+  const filePath = req.file ? path.join("uploads", req.file.filename) : null;
+
   try {
     let { name, age, gender, weight, size, type } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : null;
 
-    if (!name || !age || !gender || !weight || !size || !type || !image) {
+    if (!name || !age || !gender || !weight || !size || !type || !imagePath) {
+      if (filePath && fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath); // borra imagen si hay error de validacin
+      }
       return res
         .status(400)
         .json({ error: "Se deben completar todos los campos" });
@@ -30,13 +35,16 @@ routerPet.post("/", upload.single("image"), async (req, res) => {
 
     const existingPet = await Pet.findOne({ name, type });
     if (existingPet) {
+      if (filePath && fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
       return res.status(400).json({ error: "La mascota ya fue registrada" });
     }
 
     const newPet = new Pet({
       name,
       age,
-      image,
+      image: imagePath,
       gender,
       weight,
       size,
@@ -46,7 +54,10 @@ routerPet.post("/", upload.single("image"), async (req, res) => {
     await newPet.save();
     res.status(201).json(newPet);
   } catch (err) {
-    res.status(500).json({ error: "Error al crear mascota" });
+    if (filePath && fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    res.status(500).json({ error: "Error al crear mascota", detail: err });
   }
 });
 
@@ -67,7 +78,7 @@ routerPet.get("/:id", async (req, res) => {
     const pet = await Pet.findById(id);
 
     if (!pet) {
-      return res.status(404).json({ error: "Mascota no encontrad" });
+      return res.status(404).json({ error: "Mascota no encontrada" });
     }
 
     res.json(pet);

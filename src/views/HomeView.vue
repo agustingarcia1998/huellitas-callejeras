@@ -1,30 +1,28 @@
 <script setup>
-import PetCard from '@/components/PetCard.vue'
-import SideBar from '@/components/SideBar.vue'
-import { onMounted } from 'vue'
-import { usePetsStore } from '@/stores/pets'
+import PetCard from "@/components/PetCard.vue";
+import SideBar from "@/components/SideBar.vue";
+import { onMounted } from "vue";
+import { usePetsStore } from "@/stores/pets";
 
-const petsStore = usePetsStore()
+const petsStore = usePetsStore();
 
 onMounted(() => {
-  petsStore.loadPets()
-})
+  petsStore.fetchPets();
+});
 </script>
 
 <template>
   <v-container fluid class="d-flex pa-0 fill-height home-layout">
-    <!-- Sidebar -->
     <div class="sidebar">
       <SideBar />
     </div>
 
-    <!-- Main Content -->
     <v-container fluid class="pa-6">
       <h1 class="text-center text-h4 mb-6">🐶 Mascotas en Adopción</h1>
       <v-row dense>
         <v-col
           v-for="pet in petsStore.pets"
-          :key="pet.id"
+          :key="pet._id"
           cols="12"
           sm="6"
           md="4"
